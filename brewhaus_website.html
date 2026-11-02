@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Brewhaus — thoughtfully sourced coffee, beautifully brewed.">
+  <title>BREWHAUS — Coffee, Crafted Slowly</title>
+
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f3eee5;
+      --paper: #e9e0d3;
+      --ink: #211b17;
+      --coffee: #67432f;
+      --caramel: #b47a4b;
+      --muted: #82766b;
+      --line: rgba(33,27,23,.18);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: "DM Sans", sans-serif; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    .serif { font-family: "Playfair Display", serif; }
+    .topline { background: var(--ink); color: #f3eee5; text-align: center; padding: 9px 12px; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
+    .navbar { background: rgba(243,238,229,.94); backdrop-filter: blur(12px); padding: 19px 0; border-bottom: 1px solid var(--line); }
+    .navbar-brand { font-weight: 700; letter-spacing: .22em; font-size: 19px; }
+    .brand-mark { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--caramel); margin: 0 8px 2px 0; }
+    .nav-link { font-size: 10px; letter-spacing: .17em; text-transform: uppercase; margin-left: 22px; color: var(--ink); position: relative; }
+    .nav-link:after { content:""; position:absolute; bottom:2px; left: .5rem; width:0; height:1px; background:var(--coffee); transition:width .3s; }
+    .nav-link:hover:after { width:calc(100% - 1rem); }
+    .nav-cta { border: 1px solid var(--ink); padding: 11px 18px !important; margin-left: 25px !important; transition: .3s; }
+    .nav-cta:hover { background:var(--ink); color:var(--cream)!important; }
+    .hero { min-height: 690px; display:flex; align-items:center; position:relative; overflow:hidden; padding: 85px 0 100px; }
+    .hero:before { content:""; position:absolute; width:540px; height:540px; border:1px solid rgba(103,67,47,.18); border-radius:50%; right:-90px; top:55px; }
+    .hero:after { content:""; position:absolute; width:410px; height:410px; border:1px solid rgba(103,67,47,.16); border-radius:50%; right:-25px; top:120px; }
+    .eyebrow { font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--coffee); font-weight:700; }
+    .hero h1 { font-size:clamp(58px, 8vw, 112px); line-height:.95; letter-spacing:-.055em; margin:25px 0; position:relative; z-index:2; }
+    .hero h1 em { color:var(--coffee); font-weight:500; }
+    .hero-copy { max-width:390px; color:var(--muted); line-height:1.8; font-size:14px; }
+    .btn-coffee { display:inline-flex; align-items:center; gap:30px; background:var(--ink); color:var(--cream); padding:16px 20px; text-transform:uppercase; letter-spacing:.16em; font-size:10px; margin-top:25px; border:1px solid var(--ink); transition:.3s; }
+    .btn-coffee:hover { background:transparent; color:var(--ink); transform:translateY(-3px); }
+    .hero-visual { min-height:470px; position:relative; z-index:1; display:flex; align-items:center; justify-content:center; }
+    .hero-photo { width:min(82%, 440px); height:490px; object-fit:cover; border-radius:220px 220px 8px 8px; filter:saturate(.78); box-shadow:0 30px 65px rgba(44,29,19,.18); animation:float 6s ease-in-out infinite; }
+    .hero-stamp { position:absolute; width:125px; height:125px; border-radius:50%; background:var(--caramel); color:#fff8ee; display:grid; place-items:center; text-align:center; font-size:9px; letter-spacing:.16em; line-height:1.6; text-transform:uppercase; right:4%; bottom:5%; transform:rotate(12deg); box-shadow:0 10px 25px #67432f33; }
+    .hero-side { position:absolute; right:25px; top:45%; writing-mode:vertical-rl; font-size:9px; letter-spacing:.25em; color:var(--muted); text-transform:uppercase; }
+    .scroll-note { position:absolute; bottom:35px; left:0; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:15px; }
+    .scroll-note:before { content:""; width:48px; height:1px; background:var(--caramel); }
+    .ticker { background:var(--coffee); color:var(--cream); overflow:hidden; padding:18px 0; white-space:nowrap; }
+    .ticker-track { display:inline-block; animation:marquee 26s linear infinite; font-family:"Playfair Display",serif; font-size:20px; letter-spacing:.08em; }
+    .ticker-track span { margin:0 30px; color:#d8b18c; }
+    .section-pad { padding:110px 0; }
+    .section-kicker { color:var(--caramel); font-size:10px; text-transform:uppercase; letter-spacing:.24em; font-weight:700; }
+    .section-title { font-size:clamp(38px,5vw,66px); line-height:1.05; letter-spacing:-.04em; margin:18px 0; }
+    .intro-text { color:var(--muted); font-size:14px; line-height:1.9; max-width:450px; }
+    .story { background:var(--paper); }
+    .story-image-wrap { position:relative; padding:0 35px 35px 0; }
+    .story-image { width:100%; height:540px; object-fit:cover; filter:saturate(.75); }
+    .story-image-wrap:after { content:""; position:absolute; width:75%; height:75%; border:1px solid var(--caramel); right:0; bottom:0; z-index:0; }
+    .story-image { position:relative; z-index:1; }
+    .story-note { margin-top:40px; padding-top:20px; border-top:1px solid var(--line); font-family:"Playfair Display",serif; font-size:23px; line-height:1.4; max-width:390px; }
+    .product-section { background:var(--cream); }
+    .product-card { border:0; background:transparent; height:100%; }
+    .product-img-wrap { overflow:hidden; background:var(--paper); position:relative; }
+    .product-img { width:100%; height:350px; object-fit:cover; transition:transform .7s cubic-bezier(.2,.7,.2,1); filter:saturate(.8); }
+    .product-card:hover .product-img { transform:scale(1.06); }
+    .product-tag { position:absolute; top:15px; left:15px; background:var(--cream); padding:8px 11px; font-size:9px; letter-spacing:.14em; text-transform:uppercase; }
+    .product-info { padding:20px 0 10px; border-bottom:1px solid var(--line); }
+    .product-info h3 { font-family:"Playfair Display",serif; font-size:24px; margin:0 0 7px; }
+    .product-info p { color:var(--muted); font-size:12px; margin:0; }
+    .product-price { font-size:12px; font-weight:700; }
+    .product-link { font-size:9px; letter-spacing:.16em; text-transform:uppercase; border-bottom:1px solid var(--caramel); padding-bottom:5px; }
+    .quote-section { background:#2a211b; color:var(--cream); text-align:center; padding:115px 0; position:relative; overflow:hidden; }
+    .quote-section:before,.quote-section:after { content:"✳"; position:absolute; color:#9b7353; opacity:.35; font-size:180px; }
+    .quote-section:before { left:4%; top:10%; } .quote-section:after { right:4%; bottom:0; }
+    .quote { font-family:"Playfair Display",serif; font-size:clamp(32px,5vw,58px); line-height:1.2; max-width:850px; margin:25px auto; position:relative; z-index:1; }
+    .quote span { color:#c89466; font-style:italic; }
+    .quote-credit { font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:#c7b6a7; }
+    .process-card { padding:30px 25px; border-top:1px solid var(--line); height:100%; }
+    .process-num { color:var(--caramel); font-family:"Playfair Display",serif; font-size:38px; }
+    .process-card h3 { font-family:"Playfair Display",serif; font-size:24px; margin:15px 0 10px; }
+    .process-card p { color:var(--muted); font-size:13px; line-height:1.8; }
+    .visit { background:var(--paper); }
+    .visit-photo { width:100%; height:440px; object-fit:cover; filter:saturate(.7); }
+    .visit-detail { border-top:1px solid var(--line); padding-top:20px; margin-top:35px; }
+    .visit-detail small { color:var(--muted); text-transform:uppercase; letter-spacing:.17em; font-size:9px; }
+    .visit-detail p { font-family:"Playfair Display",serif; font-size:22px; margin:7px 0 0; }
+    .newsletter { background:var(--caramel); color:#fff8ee; padding:85px 0; }
+    .newsletter .section-title { font-size:clamp(35px,4vw,52px); }
+    .newsletter p { color:#f4e3d3; font-size:13px; }
+    .newsletter-form { display:flex; border-bottom:1px solid #f4e3d3; max-width:440px; margin-top:28px; }
+    .newsletter-form input { background:transparent; border:0; outline:0; color:white; padding:13px 0; flex:1; min-width:0; font-size:12px; }
+    .newsletter-form input::placeholder { color:#f4e3d3; }
+    .newsletter-form button { background:transparent; border:0; color:white; letter-spacing:.16em; font-size:10px; text-transform:uppercase; }
+    footer { background:var(--ink); color:var(--cream); padding:55px 0 25px; }
+    .footer-brand { font-size:22px; letter-spacing:.22em; font-weight:700; }
+    .footer-copy { color:#a99b8e; font-size:12px; line-height:1.8; max-width:260px; margin-top:15px; }
+    .footer-heading { font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:#c89466; margin-bottom:18px; }
+    .footer-links a { display:block; color:#d4c9bd; font-size:12px; margin-bottom:12px; transition:.2s; }
+    .footer-links a:hover { color:#c89466; transform:translateX(3px); }
+    .footer-bottom { border-top:1px solid #ffffff22; margin-top:45px; padding-top:20px; color:#8f8277; font-size:9px; letter-spacing:.12em; text-transform:uppercase; }
+    .reveal { opacity:0; transform:translateY(35px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .delay-1 { transition-delay:.12s; } .delay-2 { transition-delay:.24s; } .delay-3 { transition-delay:.36s; }
+    @keyframes float { 0%,100% { transform:translateY(0) rotate(-1deg); } 50% { transform:translateY(-13px) rotate(1deg); } }
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    .fade-in { animation:fadeUp 1s both; } .fade-in.delay { animation-delay:.2s; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(25px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Animated coffee-making feature */
+    .ritual-section { background:#ded1c1; overflow:hidden; position:relative; }
+    .ritual-visual { min-height:430px; background:#cbb49d; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .ritual-visual:before { content:""; position:absolute; width:330px; height:330px; border:1px solid rgba(55,35,23,.25); border-radius:50%; }
+    .ritual-visual:after { content:""; position:absolute; width:250px; height:250px; border:1px solid rgba(55,35,23,.2); border-radius:50%; }
+    .coffee-cup { width:190px; height:125px; position:relative; z-index:2; margin-top:95px; background:linear-gradient(135deg,#f8f0e6,#d8c7b4); border-radius:12px 12px 75px 75px; box-shadow:inset -14px -8px 20px rgba(73,48,31,.13),0 25px 35px rgba(45,28,17,.2); }
+    .coffee-cup:before { content:""; position:absolute; width:65px; height:70px; border:13px solid #e8ddcf; border-left:0; right:-52px; top:14px; border-radius:0 45px 45px 0; }
+    .coffee-surface { position:absolute; width:174px; height:26px; left:8px; top:-9px; border-radius:50%; background:radial-gradient(ellipse at center,#bd8a5c 0 38%,#573522 40% 100%); box-shadow:inset 0 3px 5px rgba(255,255,255,.2); }
+    .coffee-surface:after { content:""; position:absolute; width:42px; height:13px; border:2px solid #e8c6a2; border-radius:50%; left:64px; top:5px; transform:rotate(-20deg); opacity:.8; }
+    .steam { position:absolute; z-index:3; top:100px; left:50%; width:12px; height:90px; border-left:3px solid rgba(255,248,238,.75); border-radius:50%; filter:blur(1px); animation:steamRise 2.8s ease-in-out infinite; }
+    .steam.two { margin-left:-25px; animation-delay:.7s; height:72px; }
+    .steam.three { margin-left:20px; animation-delay:1.3s; height:82px; }
+    .pour-stream { position:absolute; z-index:4; width:7px; height:115px; top:58px; left:calc(50% - 3px); background:linear-gradient(to bottom,rgba(106,64,37,0),#6b4027 25%,#8c5735); border-radius:50%; transform-origin:top; animation:pulsePour 2.2s ease-in-out infinite; }
+    .pour-drop { position:absolute; z-index:4; width:8px; height:12px; background:#70452b; border-radius:50% 50% 55% 55%; top:155px; left:calc(50% - 4px); animation:dropFall 2.2s ease-in infinite; }
+    .coffee-bean { position:absolute; z-index:1; width:25px; height:16px; background:#68432e; border-radius:50%; box-shadow:inset -3px -2px 0 rgba(0,0,0,.18); }
+    .coffee-bean:after { content:""; position:absolute; height:12px; width:2px; background:#c49a73; left:12px; top:2px; border-radius:50%; transform:rotate(20deg); }
+    .bean-one { left:15%; bottom:18%; transform:rotate(25deg); animation:beanDrift 5s ease-in-out infinite; }
+    .bean-two { right:17%; top:20%; transform:rotate(-35deg); animation:beanDrift 6s ease-in-out infinite reverse; }
+    .bean-three { right:20%; bottom:15%; transform:rotate(55deg) scale(.75); }
+    .ritual-caption { position:absolute; bottom:22px; left:25px; z-index:5; color:#493322; font-size:9px; letter-spacing:.2em; text-transform:uppercase; }
+    @keyframes steamRise { 0% { opacity:0; transform:translateY(25px) scaleX(.7) rotate(-8deg); } 40% { opacity:.8; } 100% { opacity:0; transform:translateY(-45px) scaleX(1.5) rotate(10deg); } }
+    @keyframes pulsePour { 0%,100% { transform:scaleX(.7); opacity:.65; } 50% { transform:scaleX(1.35); opacity:1; } }
+    @keyframes dropFall { 0% { transform:translateY(-20px) scale(.5); opacity:0; } 35% { opacity:1; } 75%,100% { transform:translateY(48px) scale(.8); opacity:0; } }
+    @keyframes beanDrift { 0%,100% { translate:0 0; rotate:0deg; } 50% { translate:8px -12px; rotate:18deg; } }
+    @media(max-width:575px) { .ritual-visual { min-height:350px; } .coffee-cup { transform:scale(.85); } }
+
+
+    /* Interactive coffee journey inspired by cinematic product storytelling */
+    .experience-section { background:#e9e0d3; overflow:hidden; }
+    .brew-journey { background:#d9c8b5; min-height:590px; }
+    .journey-stage-wrap { min-height:590px; }
+    .journey-visual { position:sticky; top:95px; height:590px; overflow:hidden; background:radial-gradient(circle at 50% 42%,#f1e8dc 0,#d8c4ae 58%,#c5aa8e 100%); perspective:1000px; }
+    .journey-orbit { position:absolute; border:1px solid rgba(83,52,33,.22); border-radius:50%; left:50%; top:48%; transform:translate(-50%,-50%) rotate(-22deg); }
+    .orbit-a { width:430px;height:270px; }.orbit-b { width:520px;height:350px;transform:translate(-50%,-50%) rotate(24deg); }
+    .grinder { position:absolute; width:190px; height:330px; left:50%; top:48%; transform:translate(-50%,-50%); transition:opacity .7s,transform .9s cubic-bezier(.2,.8,.2,1); }
+    .grinder-glass { position:absolute; width:118px;height:125px;top:0;left:36px;border:5px solid rgba(255,255,255,.65);border-top:3px solid #fff9;border-radius:18px 18px 28px 28px;background:linear-gradient(110deg,#ffffff99,#8a624633 45%,#ffffff55);box-shadow:inset 0 0 22px #fff8;overflow:hidden; }
+    .grinder-beans { position:absolute;inset:28px 8px 8px;background:radial-gradient(ellipse at 25% 25%,#74452b 0 6px,transparent 7px),radial-gradient(ellipse at 60% 35%,#4d2d1d 0 7px,transparent 8px),radial-gradient(ellipse at 40% 70%,#89583a 0 7px,transparent 8px),radial-gradient(ellipse at 78% 75%,#57321f 0 6px,transparent 7px),radial-gradient(ellipse at 15% 85%,#603821 0 7px,transparent 8px);background-size:48px 48px;animation:beanShake 2s ease-in-out infinite; }
+    .grinder-neck { position:absolute;top:119px;left:58px;width:75px;height:55px;background:linear-gradient(90deg,#33251e,#8d7561,#35251d);clip-path:polygon(12% 0,88% 0,100% 100%,0 100%); }
+    .grinder-body { position:absolute;top:164px;left:28px;width:135px;height:120px;border-radius:14px 14px 8px 8px;background:linear-gradient(105deg,#1e1a17,#6a584a 42%,#211b17 75%);box-shadow:inset 8px 0 15px #ffffff20,0 20px 30px #51372344;display:grid;place-items:center;color:#d7b99b;letter-spacing:.3em;font-size:11px; }
+    .grinder-base { position:absolute;bottom:0;left:18px;width:155px;height:20px;border-radius:50%;background:#39271d;box-shadow:0 15px 22px #4a302533; }
+    .journey-bean { position:absolute;width:24px;height:15px;border-radius:50%;background:linear-gradient(135deg,#986342,#4c2b1b);box-shadow:inset -3px -2px 0 #321b1280;opacity:0; }
+    .journey-bean:after { content:"";position:absolute;left:11px;top:2px;width:2px;height:11px;background:#c99a70;border-radius:50%;transform:rotate(20deg); }
+    .bean-a {left:22%;top:22%;}.bean-b {right:20%;top:28%;}.bean-c {right:25%;bottom:25%;}
+    .journey-cup { position:absolute;left:50%;bottom:13%;width:155px;height:105px;transform:translateX(-50%) translateY(35px) scale(.8);opacity:0;transition:all .8s cubic-bezier(.2,.8,.2,1);border-radius:12px 12px 48px 48px;background:linear-gradient(100deg,#fffaf0,#d9cbbc 55%,#fff8ec);box-shadow:0 25px 35px #49301f33; }
+    .cup-coffee {position:absolute;left:8px;right:8px;top:-7px;height:22px;border-radius:50%;background:radial-gradient(ellipse,#c28b5d 0 35%,#56321f 38% 100%);}
+    .cup-handle {position:absolute;right:-42px;top:17px;width:55px;height:58px;border:12px solid #e9dfd1;border-left:0;border-radius:0 40px 40px 0;}
+    .cup-steam {position:absolute;top:-70px;left:45%;height:65px;width:12px;border-left:3px solid #fff9;border-radius:50%;opacity:0;}
+    .steam-b {left:62%;top:-55px;}
+    .journey-splash {position:absolute;left:50%;bottom:24%;width:12px;height:12px;border-radius:50%;background:#8b5634;opacity:0;}
+    .journey-counter {position:absolute;left:35px;bottom:30px;font-size:10px;letter-spacing:.18em;color:#563b2a;display:flex;align-items:center;gap:12px;}.journey-counter span{font:36px 'Playfair Display',serif}.journey-counter i{width:45px;height:1px;background:#8e6849;}
+    .journey-label {position:absolute;right:30px;bottom:43px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#62432e;}
+    .journey-copy {padding:70px 7% 45px;display:flex;flex-direction:column;justify-content:center;min-height:590px;background:#f3eee5;}
+    .journey-step {display:none;animation:stepIn .65s both;}.journey-step.active{display:block;}.journey-step>span,.blend-overline{font-size:9px;letter-spacing:.22em;color:var(--caramel);font-weight:700;}.journey-step h3{font:clamp(42px,5vw,62px)/1.02 'Playfair Display',serif;margin:22px 0;letter-spacing:-.04em;}.journey-step h3 em,.blend-description h3 em{color:var(--coffee);font-weight:500;}.journey-step p{font-size:13px;line-height:1.9;color:var(--muted);max-width:340px;}
+    .journey-progress {height:2px;background:#d8c9b9;margin-top:42px;}.journey-progress span{display:block;height:100%;width:33.333%;background:var(--coffee);transition:width .5s;}.journey-controls{display:flex;gap:10px;margin-top:22px;}.journey-controls button{width:42px;height:42px;border:1px solid #9f8b79;border-radius:50%;background:transparent;color:var(--ink);transition:.25s;}.journey-controls button:hover{background:var(--ink);color:var(--cream);}
+    .journey-visual[data-step="0"] .journey-bean{opacity:1;animation:beanDrop 2.8s ease-in-out infinite;}.journey-visual[data-step="0"] .bean-b{animation-delay:.7s}.journey-visual[data-step="0"] .bean-c{animation-delay:1.3s}.journey-visual[data-step="1"] .grinder{transform:translate(-50%,-50%) rotate(-5deg) scale(1.04);animation:grind 1s ease-in-out infinite alternate;}.journey-visual[data-step="1"] .grinder-beans{animation-duration:.25s}.journey-visual[data-step="2"] .grinder{opacity:.12;transform:translate(-50%,-60%) scale(.85);}.journey-visual[data-step="2"] .journey-cup{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}.journey-visual[data-step="2"] .cup-steam{opacity:1;animation:steamRise 2s ease-in-out infinite;}.journey-visual[data-step="2"] .steam-b{animation-delay:.7s}.journey-visual[data-step="2"] .journey-splash{opacity:1;animation:splash 1.4s ease-out infinite;}
+    @keyframes beanShake{50%{transform:translateY(5px) rotate(3deg)}}@keyframes beanDrop{0%,100%{transform:translateY(-12px) rotate(0)}50%{transform:translateY(24px) rotate(100deg)}}@keyframes grind{to{transform:translate(-50%,-50%) rotate(2deg) scale(1.02)}}@keyframes splash{0%{transform:translate(-50%,0) scale(.3);opacity:0}30%{opacity:.8}100%{transform:translate(-50%,-45px) scale(2.5);opacity:0}}@keyframes stepIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .blend-lab{margin-top:115px;padding:65px 7%;background:#f3eee5;display:grid;grid-template-columns:1fr 1fr;column-gap:50px;align-items:center;}.blend-lab-heading{grid-column:1/-1;margin-bottom:30px;}.blend-lab-heading h2{font-size:clamp(38px,5vw,58px);margin:13px 0;}.blend-lab-heading .intro-text{max-width:500px;margin:0;}.blend-tabs{display:flex;gap:25px;border-bottom:1px solid var(--line);margin-bottom:28px;grid-column:1/-1;}.blend-tab{background:none;border:0;padding:0 0 13px;color:#8c7d70;font-size:10px;letter-spacing:.18em;text-transform:uppercase;position:relative;}.blend-tab:after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--coffee);transition:width .3s;}.blend-tab.active{color:var(--ink);}.blend-tab.active:after{width:100%;}.blend-result{display:contents;}.blend-pack-wrap{height:310px;display:grid;place-items:center;position:relative;perspective:900px;background:radial-gradient(ellipse,#e4d4c2,#f3eee5 70%);}.blend-pack{position:relative;width:165px;height:230px;background:linear-gradient(100deg,#493023,#80563b 48%,#3a251a);color:#f5e7d5;clip-path:polygon(4% 0,96% 0,100% 100%,0 100%);box-shadow:20px 25px 35px #33211633;transform:rotateY(-18deg) rotateZ(-3deg);transition:transform .7s cubic-bezier(.2,.8,.2,1),background .5s;display:flex;align-items:center;flex-direction:column;padding-top:32px;animation:packFloat 4s ease-in-out infinite;}.blend-pack:hover{transform:rotateY(12deg) rotateZ(2deg) translateY(-8px);}.pack-top{position:absolute;top:0;left:0;right:0;height:13px;background:#21171066;border-bottom:1px solid #ffffff33;}.pack-logo{font-size:15px;line-height:1.1;letter-spacing:.19em;text-align:center;font-weight:700;}.pack-line{width:65%;height:1px;background:#e8c8a5;margin:25px 0 15px;}.pack-name{font:16px 'Playfair Display',serif;letter-spacing:.12em;text-align:center;}.pack-bottom{position:absolute;bottom:20px;font-size:7px;letter-spacing:.2em;}.pack-shadow{position:absolute;width:175px;height:20px;border-radius:50%;background:#49301f22;filter:blur(9px);bottom:25px;}.blend-description{padding:25px 0 25px 25px;}.blend-description h3{font:clamp(36px,4vw,50px)/1.08 'Playfair Display',serif;margin:20px 0;}.blend-description p{font-size:13px;line-height:1.9;color:var(--muted);max-width:390px;}.blend-notes{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px;}.blend-notes span{border:1px solid #cdbba8;padding:9px 12px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6c5542;}
+    @keyframes packFloat{0%,100%{translate:0 0}50%{translate:0 -12px}}
+    @media(max-width:991px){.journey-visual{position:relative;top:auto;height:480px}.journey-stage-wrap{min-height:480px}.journey-copy{min-height:450px;padding:55px 8%}.blend-lab{padding:45px 6%;column-gap:25px}}
+    @media(max-width:575px){.journey-visual{height:400px}.journey-stage-wrap{min-height:400px}.grinder{transform:translate(-50%,-50%) scale(.82)}.journey-copy{min-height:430px}.blend-lab{display:block;margin-top:70px;padding:35px 22px}.blend-tabs{gap:20px;margin-top:25px}.blend-pack-wrap{height:270px}.blend-description{padding:30px 0 10px}.journey-label{right:15px;font-size:8px}}
+
+    @media(max-width:991px) {
+      .navbar-collapse { padding-top:18px; } .nav-link { margin:8px 0; }
+      .nav-cta { margin:10px 0 0!important; display:inline-block; }
+      .hero { padding:65px 0 80px; } .hero-visual { margin-top:45px; min-height:400px; }
+      .hero-photo { height:420px; } .hero:before { right:-250px; } .hero:after { right:-190px; }
+      .hero-side { display:none; }
+    }
+    @media(max-width:575px) {
+      .section-pad { padding:75px 0; } .hero { min-height:auto; }
+      .hero h1 { font-size:62px; } .hero-photo { height:390px; width:85%; }
+      .hero-stamp { width:100px; height:100px; font-size:8px; right:0; }
+      .story-image { height:390px; } .product-img { height:300px; }
+      .quote-section { padding:85px 0; } .quote-section:before,.quote-section:after { font-size:100px; }
+      .visit-photo { height:330px; }
+    }
+    @media(prefers-reduced-motion:reduce) { *,*:before,*:after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } }
+  </style>
+</head>
+<body>
+  <div class="topline">A little pause. A better cup. &nbsp; — &nbsp; Freshly roasted, always.</div>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home"><span class="brand-mark"></span>BREWHAUS</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+        <div class="navbar-nav align-items-lg-center">
+          <a class="nav-link" href="#story">Our story</a>
+          <a class="nav-link" href="#coffee">The coffee</a>
+          <a class="nav-link" href="#ritual">The ritual</a>
+          <a class="nav-link" href="#experience">The experience</a>
+          <a class="nav-link" href="#craft">Our craft</a>
+          <a class="nav-link" href="#visit">Find us</a>
+          <a class="nav-link nav-cta" href="#coffee">Explore blends ↗</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container position-relative">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="eyebrow fade-in">Good coffee. No rush.</div>
+            <h1 class="serif fade-in delay">Make room<br>for <em>slow.</em></h1>
+            <p class="hero-copy fade-in delay">A thoughtful cup for the in-between moments. Carefully sourced beans, beautifully balanced roasts, and coffee made to be savoured.</p>
+            <a class="btn-coffee fade-in delay" href="#coffee">Discover our coffee <span>↗</span></a>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-visual">
+              <img class="hero-photo" src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1100&q=85" alt="Freshly brewed coffee in a ceramic cup">
+              <div class="hero-stamp">Roasted with<br>intention<br>✳ Est. 2024</div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-note">Scroll to take a sip</div>
+        <div class="hero-side">Small batches · Big comfort · Brewhaus</div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Brewhaus coffee philosophy">
+      <div class="ticker-track">SLOW MORNINGS <span>✳</span> GOOD BEANS <span>✳</span> BETTER DAYS <span>✳</span> MADE WITH INTENTION <span>✳</span> SLOW MORNINGS <span>✳</span> GOOD BEANS <span>✳</span> BETTER DAYS <span>✳</span> MADE WITH INTENTION <span>✳</span></div>
+    </div>
+
+    <section class="story section-pad" id="story">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 reveal">
+            <div class="story-image-wrap">
+              <img class="story-image" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1100&q=85" alt="Coffee being poured into a cup">
+            </div>
+          </div>
+          <div class="col-lg-6 ps-lg-5 reveal delay-1">
+            <div class="section-kicker">01 / The Brewhaus feeling</div>
+            <h2 class="section-title serif">Not just coffee.<br><em>A daily ritual.</em></h2>
+            <p class="intro-text">We believe the best things happen when you slow down. BREWHAUS was imagined around that simple idea — bringing together expressive coffee, considered details and the kind of comfort that turns an ordinary pause into your favourite part of the day.</p>
+            <p class="intro-text mt-3">From the first crack of a fresh roast to the last warm sip, every detail has a purpose. Nothing rushed. Nothing extra. Just really good coffee.</p>
+            <div class="story-note">“Find your pace. We'll take care of the coffee.”</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section section-pad" id="coffee">
+      <div class="container">
+        <div class="row align-items-end mb-5">
+          <div class="col-md-7 reveal">
+            <div class="section-kicker">02 / Made for your mood</div>
+            <h2 class="section-title serif">Meet your new<br><em>usual.</em></h2>
+          </div>
+          <div class="col-md-5 reveal delay-1">
+            <p class="intro-text ms-md-auto">A little something for every kind of coffee person. Explore our signature picks, from bright and lively to deep and comforting.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4 reveal">
+            <article class="product-card">
+              <div class="product-img-wrap">
+                <span class="product-tag">01 / The everyday</span>
+                <img class="product-img" src="https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?auto=format&fit=crop&w=900&q=85" alt="Espresso coffee in a small cup">
+              </div>
+              <div class="product-info d-flex justify-content-between align-items-start">
+                <div><h3>House Blend</h3><p>Chocolate · Hazelnut · Caramel</p></div>
+                <span class="product-price">₹499</span>
+              </div>
+              <div class="d-flex justify-content-between pt-3"><span class="product-link">Smooth & balanced</span><span class="product-link">Explore ↗</span></div>
+            </article>
+          </div>
+          <div class="col-md-4 reveal delay-1">
+            <article class="product-card">
+              <div class="product-img-wrap">
+                <span class="product-tag">02 / The bright one</span>
+                <img class="product-img" src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=85" alt="Iced coffee with milk">
+              </div>
+              <div class="product-info d-flex justify-content-between align-items-start">
+                <div><h3>Sunday Roast</h3><p>Citrus · Brown Sugar · Cocoa</p></div>
+                <span class="product-price">₹549</span>
+              </div>
+              <div class="d-flex justify-content-between pt-3"><span class="product-link">Light & lively</span><span class="product-link">Explore ↗</span></div>
+            </article>
+          </div>
+          <div class="col-md-4 reveal delay-2">
+            <article class="product-card">
+              <div class="product-img-wrap">
+                <span class="product-tag">03 / The bold one</span>
+                <img class="product-img" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=900&q=85" alt="Dark roasted coffee beans">
+              </div>
+              <div class="product-info d-flex justify-content-between align-items-start">
+                <div><h3>After Hours</h3><p>Dark Chocolate · Spice · Walnut</p></div>
+                <span class="product-price">₹599</span>
+              </div>
+              <div class="d-flex justify-content-between pt-3"><span class="product-link">Deep & full-bodied</span><span class="product-link">Explore ↗</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="ritual-section section-pad" id="ritual">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 reveal">
+            <div class="section-kicker">A moment in the making</div>
+            <h2 class="section-title serif">The art of a<br><em>slow pour.</em></h2>
+            <p class="intro-text">Freshly ground beans. Hot water. A little patience. Watch the everyday ritual unfold — because a beautiful cup is never just about the coffee.</p>
+            <a class="btn-coffee" href="#craft">Discover our process <span>↗</span></a>
+          </div>
+          <div class="col-lg-6 reveal delay-1">
+            <div class="ritual-visual" aria-label="Animated illustration of coffee being poured into a cup">
+              <span class="coffee-bean bean-one"></span>
+              <span class="coffee-bean bean-two"></span>
+              <span class="coffee-bean bean-three"></span>
+              <span class="steam"></span>
+              <span class="steam two"></span>
+              <span class="steam three"></span>
+              <span class="pour-stream"></span>
+              <span class="pour-drop"></span>
+              <div class="coffee-cup"><div class="coffee-surface"></div></div>
+              <span class="ritual-caption">Ground · Poured · Savoured</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience-section section-pad" id="experience">
+      <div class="container">
+        <div class="row align-items-end mb-5">
+          <div class="col-lg-7 reveal">
+            <div class="section-kicker">A closer look / The coffee experience</div>
+            <h2 class="section-title serif">From the first crack<br>to the <em>last drop.</em></h2>
+          </div>
+          <div class="col-lg-5 reveal delay-1"><p class="intro-text ms-lg-auto">Follow the journey of a good cup. Scroll through the stages, then explore the character of your next favourite roast.</p></div>
+        </div>
+
+        <div class="brew-journey row g-0 align-items-stretch">
+          <div class="col-lg-7 journey-stage-wrap">
+            <div class="journey-visual" id="journeyVisual">
+              <div class="journey-orbit orbit-a"></div><div class="journey-orbit orbit-b"></div>
+              <div class="journey-bean bean-a"></div><div class="journey-bean bean-b"></div><div class="journey-bean bean-c"></div>
+              <div class="grinder"><div class="grinder-glass"><span class="grinder-beans"></span></div><div class="grinder-neck"></div><div class="grinder-body"><span>BH</span></div><div class="grinder-base"></div></div>
+              <div class="journey-cup"><span class="cup-coffee"></span><span class="cup-handle"></span><span class="cup-steam steam-a"></span><span class="cup-steam steam-b"></span></div>
+              <div class="journey-splash"></div>
+              <div class="journey-counter"><span id="journeyCount">01</span> <i></i> 03</div>
+              <div class="journey-label" id="journeyLabel">Freshly selected</div>
+            </div>
+          </div>
+          <div class="col-lg-5 journey-copy">
+            <article class="journey-step active" data-step="0"><span>01 / THE BEANS</span><h3>It starts<br><em>at origin.</em></h3><p>Carefully selected coffee beans bring their own story, aroma and character to every cup. The best flavour begins long before the brew.</p></article>
+            <article class="journey-step" data-step="1"><span>02 / THE ROAST</span><h3>Heat brings<br><em>out the magic.</em></h3><p>As the beans roast, their natural character unfolds. We keep it thoughtful and balanced, letting sweetness, body and aroma find their place.</p></article>
+            <article class="journey-step" data-step="2"><span>03 / THE POUR</span><h3>And then,<br><em>that first sip.</em></h3><p>Freshly ground, slowly brewed and served warm. A little crema, a little steam, and a moment that belongs entirely to you.</p></article>
+            <div class="journey-progress"><span id="journeyProgress"></span></div>
+            <div class="journey-controls"><button type="button" id="journeyPrev" aria-label="Previous coffee stage">←</button><button type="button" id="journeyNext" aria-label="Next coffee stage">→</button></div>
+          </div>
+        </div>
+
+        <div class="blend-lab reveal">
+          <div class="blend-lab-heading"><div class="section-kicker">Find your flavour</div><h2 class="serif">Your cup, <em>your way.</em></h2><p class="intro-text">Choose a coffee profile to discover what makes it special.</p></div>
+          <div class="blend-tabs" role="tablist" aria-label="Coffee profiles">
+            <button class="blend-tab active" type="button" data-blend="origin" role="tab" aria-selected="true">Origin</button>
+            <button class="blend-tab" type="button" data-blend="roast" role="tab" aria-selected="false">Roast</button>
+            <button class="blend-tab" type="button" data-blend="flavour" role="tab" aria-selected="false">Flavour</button>
+          </div>
+          <div class="blend-result" aria-live="polite">
+            <div class="blend-pack-wrap"><div class="blend-pack"><div class="pack-top"></div><div class="pack-logo">BREW<br>HAUS</div><div class="pack-line"></div><div class="pack-name" id="packName">SINGLE ORIGIN</div><div class="pack-bottom">COFFEE / 250G</div></div><span class="pack-shadow"></span></div>
+            <div class="blend-description"><span class="blend-overline" id="blendOverline">01 / WHERE IT BEGINS</span><h3 class="serif" id="blendTitle">Grown with<br><em>character.</em></h3><p id="blendText">A considered selection from expressive growing regions, chosen for its distinctive character and beautifully balanced cup.</p><div class="blend-notes" id="blendNotes"><span>Traceable</span><span>Thoughtful</span><span>Distinctive</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section">
+      <div class="container reveal">
+        <div class="section-kicker" style="color:#c89466">A little coffee philosophy</div>
+        <p class="quote">“Somewhere between the first sip and the last, you find a little more <span>room to breathe.</span>”</p>
+        <div class="quote-credit">The Brewhaus way of life</div>
+      </div>
+    </section>
+
+    <section class="section-pad" id="craft">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-lg-7 reveal">
+            <div class="section-kicker">03 / From bean to brew</div>
+            <h2 class="section-title serif">Good things take<br><em>a little time.</em></h2>
+          </div>
+          <div class="col-lg-5 align-self-end reveal delay-1"><p class="intro-text">We keep our process intentional and our approach uncomplicated. Great coffee starts long before it reaches your cup.</p></div>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4 reveal"><div class="process-card"><div class="process-num">01</div><h3>Thoughtfully sourced</h3><p>We look for expressive beans and work with quality-focused growers and coffee partners.</p></div></div>
+          <div class="col-md-4 reveal delay-1"><div class="process-card"><div class="process-num">02</div><h3>Roasted in small batches</h3><p>Careful roasting brings out each coffee's character, aroma and natural sweetness.</p></div></div>
+          <div class="col-md-4 reveal delay-2"><div class="process-card"><div class="process-num">03</div><h3>Brewed for the moment</h3><p>Whether you like it bold, milky, iced or black, make every cup your own ritual.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit section-pad" id="visit">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 reveal">
+            <div class="section-kicker">04 / Come on in</div>
+            <h2 class="section-title serif">Your corner<br>of <em>calm.</em></h2>
+            <p class="intro-text">A welcoming space for slow mornings, good conversations and one more cup. Drop by, take a seat and stay a little longer.</p>
+            <div class="row visit-detail">
+              <div class="col-6"><small>Find us</small><p>Chennai, India</p></div>
+              <div class="col-6"><small>Opening hours</small><p>8 AM — 8 PM</p></div>
+            </div>
+            <a class="btn-coffee" href="mailto:hello@brewhaus.example">Say hello <span>↗</span></a>
+          </div>
+          <div class="col-lg-6 reveal delay-1">
+            <img class="visit-photo" src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1100&q=85" alt="Warm and inviting coffee shop interior">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 reveal">
+            <div class="section-kicker" style="color:#fff0df">A note from us</div>
+            <h2 class="section-title serif">Good coffee.<br>Good things <em>ahead.</em></h2>
+            <p>Get the occasional note on new roasts, coffee rituals and little things worth slowing down for.</p>
+          </div>
+          <div class="col-lg-6 reveal delay-1">
+            <form class="newsletter-form" id="newsletterForm">
+              <input type="email" id="emailInput" placeholder="Your email address" aria-label="Your email address" required>
+              <button type="submit">Sign me up ↗</button>
+            </form>
+            <div id="formMessage" class="small mt-3" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-5">
+          <a href="#home" class="footer-brand">BREWHAUS</a>
+          <p class="footer-copy">Coffee, crafted slowly. Made for the moments that make a day feel like yours.</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <div class="footer-heading">Explore</div>
+          <div class="footer-links"><a href="#story">Our story</a><a href="#coffee">The coffee</a><a href="#craft">Our craft</a><a href="#visit">Find us</a></div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <div class="footer-heading">Follow along</div>
+          <div class="footer-links"><a href="#">Instagram ↗</a><a href="#">Pinterest ↗</a><a href="#">Facebook ↗</a></div>
+        </div>
+        <div class="col-lg-3">
+          <div class="footer-heading">Get in touch</div>
+          <div class="footer-links"><a href="mailto:hello@brewhaus.example">hello@brewhaus.example</a><a href="#visit">Chennai, India</a></div>
+        </div>
+      </div>
+      <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between gap-2">
+        <span>© 2026 Brewhaus Coffee Co.</span><span>Made with care, served with warmth.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(function () {
+      // Smooth-scroll for internal navigation links
+      $('a[href^="#"]').on('click', function (event) {
+        const target = $(this.getAttribute('href'));
+        if (target.length) {
+          event.preventDefault();
+          $('html, body').animate({ scrollTop: target.offset().top - 78 }, 750);
+          $('.navbar-collapse').collapse('hide');
+        }
+      });
+
+      // Reveal elements as they enter the viewport
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+      document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
+
+      // Scroll-led coffee journey: update the visual as each stage enters view.
+      let activeJourneyStep = 0;
+      const journeySteps = document.querySelectorAll('.journey-step');
+      const journeyVisual = document.getElementById('journeyVisual');
+      function setJourneyStep(index) {
+        activeJourneyStep = (index + journeySteps.length) % journeySteps.length;
+        journeySteps.forEach((step, i) => step.classList.toggle('active', i === activeJourneyStep));
+        journeyVisual.dataset.step = activeJourneyStep;
+        $('#journeyCount').text(String(activeJourneyStep + 1).padStart(2, '0'));
+        $('#journeyProgress').css('width', ((activeJourneyStep + 1) / journeySteps.length * 100) + '%');
+        $('#journeyLabel').text(['Freshly selected', 'Small-batch roasted', 'Slowly poured'][activeJourneyStep]);
+      }
+      $('#journeyPrev').on('click', () => setJourneyStep(activeJourneyStep - 1));
+      $('#journeyNext').on('click', () => setJourneyStep(activeJourneyStep + 1));
+      journeyVisual.dataset.step = '0';
+      const journeyObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setJourneyStep(Number(entry.target.dataset.step));
+        });
+      }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+      journeySteps.forEach(step => journeyObserver.observe(step));
+
+      // Interactive coffee profile selector.
+      const blendProfiles = {
+        origin: { overline:'01 / WHERE IT BEGINS', title:'Grown with<br><em>character.</em>', text:'A considered selection from expressive growing regions, chosen for its distinctive character and beautifully balanced cup.', notes:['Traceable','Thoughtful','Distinctive'], pack:'SINGLE ORIGIN', color:'linear-gradient(100deg,#493023,#80563b 48%,#3a251a)' },
+        roast: { overline:'02 / THE PERFECT ROAST', title:'A little depth.<br><em>A lot of soul.</em>', text:'Roasted in small batches to bring out a rounded body, gentle sweetness and the comforting aroma that makes you come back for another cup.', notes:['Medium roast','Small batch','Balanced'], pack:'HOUSE ROAST', color:'linear-gradient(100deg,#29221d,#59402f 48%,#211a16)' },
+        flavour: { overline:'03 / NOTES TO SAVOUR', title:'Find your<br><em>kind of bold.</em>', text:'Think dark chocolate, toasted nuts and a hint of caramel. Layered flavour that feels familiar, with just enough surprise.', notes:['Chocolate','Hazelnut','Caramel'], pack:'SIGNATURE BLEND', color:'linear-gradient(100deg,#75472b,#b47a4b 48%,#55301d)' }
+      };
+      $('.blend-tab').on('click', function () {
+        const profile = blendProfiles[$(this).data('blend')];
+        $('.blend-tab').removeClass('active').attr('aria-selected','false');
+        $(this).addClass('active').attr('aria-selected','true');
+        $('.blend-pack').css('transform','rotateY(75deg) scale(.85)');
+        setTimeout(() => {
+          $('#blendOverline').text(profile.overline);
+          $('#blendTitle').html(profile.title);
+          $('#blendText').text(profile.text);
+          $('#packName').text(profile.pack);
+          $('.blend-pack').css('background',profile.color).css('transform','rotateY(-18deg) rotateZ(-3deg)');
+          $('#blendNotes').html(profile.notes.map(note => '<span>' + note + '</span>').join(''));
+        }, 180);
+      });
+
+      // Demo newsletter interaction (no backend connected)
+      $('#newsletterForm').on('submit', function (event) {
+        event.preventDefault();
+        const email = $('#emailInput').val().trim();
+        if (email) {
+          $('#formMessage').text('Thank you! You are on the Brewhaus list.').hide().fadeIn(350);
+          this.reset();
+        }
+      });
+
+      // Subtle navbar shadow after scrolling
+      $(window).on('scroll', function () {
+        $('.navbar').css('box-shadow', $(this).scrollTop() > 30 ? '0 8px 25px rgba(33,27,23,.06)' : 'none');
+      });
+    });
+  </script>
+</body>
+</html>
